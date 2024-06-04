@@ -1,0 +1,419 @@
+{
+	"info": {
+		"_postman_id": "9e15e9f0-9dcb-4606-a3a1-4b6bf29a8633",
+		"name": "Burger Shop",
+		"description": "This Postman collection allows you to interact with Burger Shop API. It includes requests for CRUD (Create, Read, Update, Delete) operations on burgers.\n\n**GET Requests**\n\n- **Get a Burger:** Retrieves a specific burger by its ID.\n    \n    - URL: `https://localhost:port/api/burgers/665f301c9322ea1855b43192`\n        \n- **Get all Burgers:** Retrieves a list of all burgers.\n    \n    - URL: `https://localhost:port/api/burgers`\n        \n\n**POST Request**\n\n- **Add a Burger:** Creates a new burger.\n    \n    - URL: `https://localhost:port/api/burgers`\n        \n    - Body: (raw JSON)\n        \n        - `name` (string): Name of the burger.\n            \n        - `price` (number): Price of the burger.\n            \n        - `ingredients` (array of strings): List of ingredients in the burger.\n            \n        - `calories` (number): Calorie count of the burger.\n            \n        - `isVegetarian` (boolean): Whether the burger is vegetarian.\n            \n\n**PUT Request**\n\n- **Set a Burger:** Updates an existing burger by its ID.\n    \n    - URL: `https://localhost:port/api/burgers/665f301c9322ea1855b43192`\n        \n    - Body: (raw JSON) - You can update any of the burger properties mentioned in the POST request body.\n        \n\n**DELETE Request**\n\n- **Delete a Burger:** Deletes a burger by its ID.\n    \n    - URL: `https://localhost:port/api/burgers/665f301c9322ea1855b43192`",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22945824"
+	},
+	"item": [
+		{
+			"name": "Get a Burger",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData).to.be.an('object');",
+							"  pm.expect(responseData).to.include.all.keys('_id', 'name', 'price', 'ingredients', 'calories', 'isVegetarian', 'createdAt', '__v');",
+							"});",
+							"",
+							"",
+							"pm.test(\"Id is a non-empty string\", function () {",
+							"  const responseData = pm.response.json();",
+							"  pm.expect(responseData._id).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Id should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Price is a non-negative number\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData.price).to.be.a('number');",
+							"    pm.expect(responseData.price).to.be.at.least(0);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}/burgers/665f301c9322ea1855b43192",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"burgers",
+						"665f301c9322ea1855b43192"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add a Burger",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.name).to.exist;",
+							"    pm.expect(responseData.price).to.exist;",
+							"    pm.expect(responseData.ingredients).to.exist;",
+							"    pm.expect(responseData.calories).to.exist;",
+							"    pm.expect(responseData.isVegetarian).to.exist;",
+							"    pm.expect(responseData._id).to.exist;",
+							"    pm.expect(responseData.createdAt).to.exist;",
+							"    pm.expect(responseData.__v).to.exist;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Name is a non-empty string\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.name).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Name should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Price is a positive number\", function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData.price).to.be.a('number').above(0);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Ingredients is an array that is not empty\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData).to.be.an('object');",
+							"  pm.expect(responseData.ingredients).to.be.an('array').and.to.have.lengthOf.at.least(1, \"Ingredients array should not be empty\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Bacon and Cheese\",\n    \"price\": 8.99,\n    \"ingredients\": [\"beef\", \"bacon\", \"regular cheese\"],\n    \"calories\": 530,\n    \"isVegetarian\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/burgers",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"burgers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Burgers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.burgers).to.be.an('array');",
+							"    ",
+							"    responseData.burgers.forEach(function (burger) {",
+							"        pm.expect(burger._id).to.exist;",
+							"        pm.expect(burger.name).to.exist;",
+							"        pm.expect(burger.price).to.exist;",
+							"        pm.expect(burger.ingredients).to.exist;",
+							"        pm.expect(burger.calories).to.exist;",
+							"        pm.expect(burger.isVegetarian).to.exist;",
+							"        pm.expect(burger.createdAt).to.exist;",
+							"        pm.expect(burger.__v).to.exist;",
+							"    });",
+							"});",
+							"",
+							"",
+							"pm.test(\"Burgers array is present and contains the expected number of elements\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.burgers).to.exist.and.to.be.an('array');",
+							"    pm.expect(responseData.burgers.length).to.equal(responseData.results);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Validate the properties of burgers\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.burgers).to.be.an('array').and.to.have.lengthOf.at.least(1, \"Burgers array should not be empty\");",
+							"",
+							"    responseData.burgers.forEach(burger => {",
+							"        pm.expect(burger.name).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Name should be a non-empty string\");",
+							"        pm.expect(burger.price).to.be.a('number').and.to.be.at.least(0, \"Price should be a non-negative number\");",
+							"        pm.expect(burger.ingredients).to.be.an('array', \"Ingredients should be an array\");",
+							"        pm.expect(burger.calories).to.be.a('number').and.to.be.at.least(0, \"Calories should be a non-negative number\");",
+							"        pm.expect(burger.isVegetarian).to.be.a('boolean', \"isVegetarian should be a boolean\");",
+							"        pm.expect(new Date(burger.createdAt)).to.not.be.NaN.and.to.not.be.an('Invalid Date', \"createdAt should be a valid date\");",
+							"        pm.expect(burger.__v).to.be.a('number').and.to.be.at.least(0, \"__v should be a non-negative integer\");",
+							"    });",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}/burgers",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"burgers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set a Burger",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"",
+							"pm.test(\"Response status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData.burger).to.be.an('object');",
+							"    pm.expect(responseData.burger).to.have.property('_id');",
+							"    pm.expect(responseData.burger).to.have.property('name');",
+							"    pm.expect(responseData.burger).to.have.property('price');",
+							"    pm.expect(responseData.burger).to.have.property('ingredients');",
+							"    pm.expect(responseData.burger).to.have.property('calories');",
+							"    pm.expect(responseData.burger).to.have.property('isVegetarian');",
+							"    pm.expect(responseData.burger).to.have.property('createdAt');",
+							"    pm.expect(responseData.burger).to.have.property('__v');",
+							"});",
+							"",
+							"",
+							"pm.test(\"Price is a non-negative number\", function () {",
+							"  const responseData = pm.response.json();",
+							"",
+							"  pm.expect(responseData.burger.price).to.be.a('number');",
+							"  pm.expect(responseData.burger.price).to.be.at.least(0);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Ingredients is an array with at least one element\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData.burger.ingredients).to.be.an('array').that.is.not.empty;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 300ms\", function () {",
+							"  pm.expect(pm.response.responseTime).to.be.below(300);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"ingredients\": [\"beef\", \"american cheese\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/burgers/665f301c9322ea1855b43192",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"burgers",
+						"665f301c9322ea1855b43192"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a Burger",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"",
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Validate the burger object schema\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData.burger).to.be.an('object');",
+							"    pm.expect(responseData.burger).to.have.property('_id').that.is.a('string');",
+							"    pm.expect(responseData.burger).to.have.property('name').that.is.a('string');",
+							"    pm.expect(responseData.burger).to.have.property('price').that.is.a('number');",
+							"    pm.expect(responseData.burger).to.have.property('ingredients').that.is.an('array');",
+							"    pm.expect(responseData.burger).to.have.property('calories').that.is.a('number');",
+							"    pm.expect(responseData.burger).to.have.property('isVegetarian').that.is.a('boolean');",
+							"    pm.expect(responseData.burger).to.have.property('createdAt').that.is.a('string');",
+							"    pm.expect(responseData.burger).to.have.property('__v').that.is.a('number');",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"packages": {},
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}/burgers/665f3c050c94de4a934d13ac",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"burgers",
+						"665f3c050c94de4a934d13ac"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "PORT",
+			"value": "6969",
+			"type": "string"
+		},
+		{
+			"key": "HOST",
+			"value": "https://localhost:{{PORT}}/api",
+			"type": "string"
+		}
+	]
+}
