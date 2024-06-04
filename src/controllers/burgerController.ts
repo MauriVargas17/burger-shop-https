@@ -25,7 +25,7 @@ export const updateBurger = async (req: Request, res: Response) => {
     if (!burger) {
       return res.status(404).send('Burger not found');
     }
-    res.send(burger);
+    res.send({ message: 'Burger updated successfully', burger: burger });
   } catch (error) {
     handleError(error, res);
   }
@@ -34,7 +34,7 @@ export const updateBurger = async (req: Request, res: Response) => {
 export const getBurgers = async (_req: Request, res: Response) => {
   try {
     const burgers = await Burger.find();
-    res.send(burgers);
+    res.send({results: burgers.length, burgers});
   } catch (error) {
     handleError(error, res);
   }
@@ -58,7 +58,7 @@ export const deleteBurger = async (req: Request, res: Response) => {
     if (!burger) {
       return res.status(404).send('Burger not found');
     }
-    res.send(burger);
+    res.send({ message: 'Burger deleted successfully', burger: burger });
   } catch (error) {
     handleError(error, res);
   }
