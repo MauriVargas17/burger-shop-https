@@ -1,0 +1,15 @@
+version: "3.8"
+
+# !!!
+# Create a folder in the root directory of the project named 'mongo-data'
+# and make it a bind mount in order to persist data between containers.
+
+services:
+  mongosito:
+    image: mongo 
+    container_name: burgers-db  
+    restart: unless-stopped 
+    ports:
+      - "27017:27017" 
+    volumes:
+      - ./mongo-data:/data/db 
