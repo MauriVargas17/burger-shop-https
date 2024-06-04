@@ -1,0 +1,6 @@
+mongo-data
+.env
+*.mongodb.js
+node_modules
+app.ts
+*.pem
